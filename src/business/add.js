@@ -23,6 +23,21 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
     throw error;
   }
 }
+function verifPassword(password) {
+  if (password.length < 8) {
+    return false;
+  } else if (password.search(/[a-z]/) == -1) {
+    return false;
+  } else if (password.search(/[A-Z]/) == -1) {
+    return false;
+  } else if (password.search(/[0-9]/) == -1) {
+    return false;
+  } else if (password.search(/[#?!@$ %^&*-]/) == -1) {
+    return false;
+  } else {
+    return true;
+  }
+}
 
 function getCity(codepostale) {}
 

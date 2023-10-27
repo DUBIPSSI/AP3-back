@@ -22,7 +22,7 @@ async function getClub() {
         console.error('Erreur lors de la récupération des utilisateurs : ' + error);
         reject(error);
       } else {
-        console.log('Utilisateurs récupérés avec succès !');
+        console.log('Club récupérés avec succès !');
         resolve(results);
       }
     });
@@ -36,7 +36,7 @@ async function getEvenement() {
         console.error('Erreur lors de la récupération des utilisateurs : ' + error);
         reject(error);
       } else {
-        console.log('Utilisateurs récupérés avec succès !');
+        console.log('Evenement récupérés avec succès !');
         resolve(results);
       }
     });

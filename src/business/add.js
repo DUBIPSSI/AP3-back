@@ -5,7 +5,6 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
     INSERT INTO utilisateur (nom, prenom, role, date_de_naissance, ville, departement, mail, mot_de_passe)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
-
   try {
     const results = await new Promise((resolve, reject) => {
       db.query(query, [username, userprenom, role, birth, ville, departement, email, password], (error, results) => {
@@ -18,25 +17,22 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
         }
       });
     });
-    return results;
   } catch (error) {
     throw error;
   }
 }
 async function verifPassword(password) {
   try {
-    if (password.length < 8) {
+    if (password.length < 16 ) {
       return error;
     } else if (password.search(/[a-z]/) == -1) {
       return error;
     } else if (password.search(/[A-Z]/) == -1) {
-      return false;
+      return error;
     } else if (password.search(/[0-9]/) == -1) {
-      return false;
+      return error;
     } else if (password.search(/[#?!@$ %^&*-]/) == -1) {
-      return false;
-    } else if (password.length > 16) {
-      return false;
+      return error;
     }
   } catch (error) {
     console.error('Erreur lors de la vérification du mot de passe : ' + error);
@@ -46,7 +42,16 @@ async function verifPassword(password) {
 }
 
 function getCity(codepostale) {
-  axios.get().then((reponse) => {});
+  axios
+  .get(codesPostaux.find(codepostale)).
+  then((reponse) => {
+    const { ville, departement } = reponse;
+    return { ville, departement };
+  })
+  .catch((error) => {
+    console.error('Erreur lors de la récupération de la ville et du département : ' + error);
+    reject(error);
+  });
 }
 
 module.exports = { ajouterUtilisateur, verifPassword, getCity };

@@ -1,11 +1,13 @@
 const express = require('express');
 const router = express.Router();
-const { ajouterUtilisateur } = require('../business/add');
+const { ajouterUtilisateur, verifPassword, getCity } = require('../business/add');
 const { getUtilisateurs, getClub, getEvenement } = require('../business/get');
 
 router.post('/add', (req, res) => {
   const { username, userprenom, role, birth, codepostale, email, password } = req.body;
-  ajouterUtilisateur(username, userprenom, role, birth, ville, departement, email, password);
+  // const { ville, departement } = getCity(codepostale);
+  const pass = verifPassword(password);
+  ajouterUtilisateur(username, userprenom, role, birth, null, null, email, pass);
   res.send('Utilisateur ajouté avec succès.'); // Réponse pour la requête POST
 });
 
@@ -15,7 +17,7 @@ router.get('/utilisateur', async (req, res) => {
     res.json(utilisateurs); // Répondre avec les utilisateurs en format JSON
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });
-  }
+  } 
 });
 
 router.get('/club', async (req, res) => {

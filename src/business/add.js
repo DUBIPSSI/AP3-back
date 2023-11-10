@@ -23,22 +23,30 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
     throw error;
   }
 }
-function verifPassword(password) {
-  if (password.length < 8) {
-    return false;
-  } else if (password.search(/[a-z]/) == -1) {
-    return false;
-  } else if (password.search(/[A-Z]/) == -1) {
-    return false;
-  } else if (password.search(/[0-9]/) == -1) {
-    return false;
-  } else if (password.search(/[#?!@$ %^&*-]/) == -1) {
-    return false;
-  } else {
-    return true;
+async function verifPassword(password) {
+  try {
+    if (password.length < 8) {
+      return error;
+    } else if (password.search(/[a-z]/) == -1) {
+      return error;
+    } else if (password.search(/[A-Z]/) == -1) {
+      return false;
+    } else if (password.search(/[0-9]/) == -1) {
+      return false;
+    } else if (password.search(/[#?!@$ %^&*-]/) == -1) {
+      return false;
+    } else if (password.length > 16) {
+      return false;
+    }
+  } catch (error) {
+    console.error('Erreur lors de la vérification du mot de passe : ' + error);
+    reject(error);
   }
+  return password;
 }
 
-function getCity(codepostale) {}
+function getCity(codepostale) {
+  axios.get().then((reponse) => {});
+}
 
-module.exports = { ajouterUtilisateur };
+module.exports = { ajouterUtilisateur, verifPassword, getCity };

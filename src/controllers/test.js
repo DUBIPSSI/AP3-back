@@ -8,8 +8,7 @@ router.use(express.json());
 router.post('/add', async (req, res) => {
   try {
     console.log(req.body);
-    const { username, userprenom, codepostal, email, password } = req.body;
-  console.log(req.body);
+    const { username, userprenom, codepostale, email, password } = req.body;
     const birth = '1999-01-01';
     const role = 1;
     // const pass = await verifPassword(password);

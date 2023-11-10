@@ -4,7 +4,8 @@ const { ajouterUtilisateur, verifPassword, getCity } = require('../business/add'
 const { getUtilisateurs, getClub, getEvenement } = require('../business/get');
 
 router.post('/add', (req, res) => {
-  const { username, userprenom, role, birth, codepostale, email, password } = req.body;
+  const { username, userprenom, role, birth, codepostal, email, password } = req.body;
+  console.log(req.body);
   // const { ville, departement } = getCity(codepostale);
   const pass = verifPassword(password);
   ajouterUtilisateur(username, userprenom, role, birth, null, null, email, pass);

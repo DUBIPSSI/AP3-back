@@ -5,7 +5,7 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
   const hashedPassword = await bcrypt.hash(password, 10); // Hashage du mot de passe
 
   const query = `
-    INSERT INTO utilisateur (nom, prenom, role, date_de_naissance, ville, departement, mail, mot_de_passe)
+    INSERT INTO utilisateur (nom, prenom, role, date_de_naissance, ville, departement, mot_de_passe, mail)
     VALUES (?, ?, ?, ?, ?, ?, ?, ?)
   `;
   try {
@@ -20,8 +20,8 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
         }
       });
     });
-  } catch (error) {
-    throw error;
+  } catch {
+    console.log('fdp');
   }
 }
 

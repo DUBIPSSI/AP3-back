@@ -28,8 +28,9 @@ router.post('/add', validateUser, async (req, res) => {
 
 router.post('/addEvent', async (req, res) => {
   try {
-    const { nom, description, lieu, prix, capacite } = req.body;
-    await ajouterEvent(nom, description, lieu, prix, capacite);
+    const { nom, description, lieu, prix, capacite, date } = req.body;
+    console.log(req.body);
+    await ajouterEvent(nom, description, lieu, prix, capacite, date);
     res.send('Evenement ajouté avec succès.');
   } catch (error) {
     res.status(500).json({ error: "Erreur lors de l'ajout de l'utilisateur." });

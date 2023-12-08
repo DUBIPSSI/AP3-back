@@ -63,14 +63,14 @@ async function login(email, password) {
   }
 }
 
-async function ajouterEvent(nom, description, lieu, prix, capacite) {
+async function ajouterEvent(nom, description, lieu, prix, capacite, date ) {
   const query = `
-    INSERT INTO evenement (nom, description, lieu, prix, capacite)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO evenement (nom, description, lieu, prix, capacite, date)
+    VALUES (?, ?, ?, ?, ?, ?)
   `;
   try {
     const res = await new Promise((resolve, reject) => {
-      db.query(query, [nom, description, lieu, prix, capacite], (error, results) => {
+      db.query(query, [nom, description, lieu, prix, capacite, date], (error, results) => {
         if (error) {
           console.error("Erreur lors de l'ajout de l'utilisateur : " + error);
           reject(error);

@@ -11,18 +11,8 @@ function verifMdp(mdp) {
   return regex.test(mdp);
 }
 function verifbirthDate(date) {
+  console.log(date);
   var regex = /^\d{4}-\d{2}-\d{2}$/;
-  if (regex.test(date)) {
-    var parts = date.split('/');
-    var day = parseInt(parts[0], 10);
-    var month = parseInt(parts[1], 10) - 1;
-    var year = parseInt(parts[2], 10);
-    var date = new Date(year, month, day);
-    var tenYearsAgo = new Date();
-    tenYearsAgo.setFullYear(tenYearsAgo.getFullYear() - 10);
-
-    return date <= new Date() && date >= tenYearsAgo;
-  }
-  return false;
+  return regex.test(date)
 }
 module.exports = { verifName, verifMail, verifMdp, verifbirthDate };

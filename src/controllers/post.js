@@ -4,7 +4,7 @@ const router = express.Router();
 const codesPostaux = require('codes-postaux');
 const jwt = require('jsonwebtoken');
 
-const { ajouterUtilisateur, login } = require('../business/add');
+const { ajouterUtilisateur, login, ajouterEvent } = require('../business/add');
 
 router.use(express.json());
 
@@ -26,13 +26,23 @@ router.post('/add', async (req, res) => {
   }
 });
 
+router.post('/addEvent', async (req, res) => {
+  try {
+    const { nom, description, lieu, prix, capacite } = req.body;
+    await ajouterEvent(nom, description, lieu, prix, capacite);
+    res.send('Evenement ajouté avec succès.');
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de l'ajout de l'utilisateur." });
+  }
+});
+
 router.post('/login', async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await login(email, password);
 
     if (user) {
-      const token = jwt.sign({ userId: user.id, email: user.email }, 'token');
+      const token = jwt.sign({ email: user.email, role: user.role }, 'token');
       res.status(200).json({ token });
     } else {
       res.status(401).json({ error: 'Identifiants invalides.' });

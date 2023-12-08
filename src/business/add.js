@@ -27,7 +27,7 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
 
 async function login(email, password) {
   const query = `
-    SELECT id, mail, mot_de_passe FROM utilisateur WHERE mail = ?
+    SELECT id, mail, mot_de_passe, role FROM utilisateur WHERE mail = ?
   `;
   try {
     const userData = await new Promise((resolve, reject) => {
@@ -44,7 +44,7 @@ async function login(email, password) {
                 reject(err);
               } else if (passwordMatch) {
                 console.log('Mot de passe valide !');
-                resolve({ id: user.id, email: user.mail });
+                resolve({ email: user.mail, role: user.role });
               } else {
                 console.log('Mot de passe invalide.');
                 resolve(null);
@@ -63,4 +63,26 @@ async function login(email, password) {
   }
 }
 
-module.exports = { ajouterUtilisateur, login };
+async function ajouterEvent(nom, description, lieu, prix, capacite) {
+  const query = `
+    INSERT INTO evenement (nom, description, lieu, prix, capacite)
+    VALUES (?, ?, ?, ?, ?)
+  `;
+  try {
+    const res = await new Promise((resolve, reject) => {
+      db.query(query, [nom, description, lieu, prix, capacite], (error, results) => {
+        if (error) {
+          console.error("Erreur lors de l'ajout de l'utilisateur : " + error);
+          reject(error);
+        } else {
+          console.log('Evenement ajouté avec succès !');
+          resolve(results);
+        }
+      });
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = { ajouterUtilisateur, login, ajouterEvent };

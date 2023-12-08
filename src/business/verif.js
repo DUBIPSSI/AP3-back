@@ -11,7 +11,7 @@ function verifMdp(mdp) {
   return regex.test(mdp);
 }
 function verifbirthDate(date) {
-  var regex = /^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])\/(\d{4})$/;
+  var regex = /^\d{4}-\d{2}-\d{2}$/;
   if (regex.test(date)) {
     var parts = date.split('/');
     var day = parseInt(parts[0], 10);

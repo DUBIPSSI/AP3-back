@@ -1,8 +1,8 @@
 const express = require('express');
 const session = require('express-session');
 const router = express.Router();
-const codesPostaux = require('codes-postaux');
 const jwt = require('jsonwebtoken');
+const validateUser = require('./middleware');
 
 const { ajouterUtilisateur, login, ajouterEvent } = require('../business/add');
 
@@ -16,7 +16,7 @@ router.use(
   })
 );
 
-router.post('/add', async (req, res) => {
+router.post('/add', validateUser, async (req, res) => {
   try {
     const { username, userprenom, email, password, birth, role } = req.body;
     await ajouterUtilisateur(username, userprenom, role, birth, 'ville', 'departement', email, password);

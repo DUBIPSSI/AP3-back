@@ -29,7 +29,7 @@ async function getClub() {
   });
 }
 async function getEvenement() {
-  const query = `SELECT * FROM evenment`;
+  const query = `SELECT * FROM evenement ORDER BY id DESC `;
   return new Promise((resolve, reject) => {
     db.query(query, (error, results) => {
       if (error) {

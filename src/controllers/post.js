@@ -35,7 +35,7 @@ router.post('/login', async (req, res) => {
 
     if (user) {
       const token = jwt.sign({ email: user.email, role: user.role }, 'token');
-      res.status(200).json({ token }, 'fdp');
+      res.status(200).json({ token });
     } else {
       res.status(401).json({ error: 'Identifiants invalides.' });
     }

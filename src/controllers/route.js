@@ -13,7 +13,7 @@ router.get('/user', (req, res) => {
     const decoded = jwt.verify(token, 'token');
     console.log(decoded);
   } catch (error) {
-    console.error('ta gueule');
+    console.error(error);
   }
 });
 

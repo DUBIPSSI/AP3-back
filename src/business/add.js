@@ -10,7 +10,7 @@ async function ajouterUtilisateur(username, userprenom, role, birth, ville, depa
   `;
   try {
     const results = await new Promise((resolve, reject) => {
-      db.query(query, [username, userprenom, role, birth, ville, departement, email, hashedPassword], (error, results) => {
+      db.query(query, [username, userprenom, role, birth, ville, departement, hashedPassword, email], (error, results) => {
         if (error) {
           console.error("Erreur lors de l'ajout de l'utilisateur : " + error);
           reject(error);

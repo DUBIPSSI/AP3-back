@@ -1,19 +1,21 @@
 const express = require('express');
-const session = require('express-session');
 const router = express.Router();
 const codesPostaux = require('codes-postaux');
+const jwt = require('jsonwebtoken');
 
 const { getUtilisateurs, getClub, getEvenement } = require('../business/get');
 
 router.use(express.json());
 
-router.use(
-  session({
-    secret: 'secret_key',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+router.get('/user', (req, res) => {
+  const { token } = req.body;
+  try {
+    const decoded = jwt.verify(token, 'token');
+    console.log(decoded);
+  } catch (error) {
+    console.error('ta gueule');
+  }
+});
 
 router.get('/utilisateur', async (req, res) => {
   try {
@@ -37,14 +39,6 @@ router.get('/evenement', async (req, res) => {
   try {
     const utilisateurs = await getEvenement();
     res.json(utilisateurs);
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });
-  }
-});
-router.get('/:codepostale', async (req, res) => {
-  try {
-    const departement = await codesPostaux.find(req.params.codepostale);
-    res.json(departement);
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });
   }

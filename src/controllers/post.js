@@ -1,5 +1,4 @@
 const express = require('express');
-const session = require('express-session');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const validateUser = require('./middleware');
@@ -7,14 +6,6 @@ const validateUser = require('./middleware');
 const { ajouterUtilisateur, login, ajouterEvent } = require('../business/add');
 
 router.use(express.json());
-
-router.use(
-  session({
-    secret: 'secret_key',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
 
 router.post('/add', validateUser, async (req, res) => {
   try {
@@ -44,7 +35,7 @@ router.post('/login', async (req, res) => {
 
     if (user) {
       const token = jwt.sign({ email: user.email, role: user.role }, 'token');
-      res.status(200).json({ token });
+      res.status(200).json({ token }, 'fdp');
     } else {
       res.status(401).json({ error: 'Identifiants invalides.' });
     }

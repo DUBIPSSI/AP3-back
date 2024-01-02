@@ -8,12 +8,13 @@ const { getUtilisateurs, getClub, getEvenement } = require('../business/get');
 router.use(express.json());
 
 router.get('/user', (req, res) => {
-  const { token } = req.body;
+  const { token } = req.query;
+  console.log(req.query);
   try {
     const decoded = jwt.verify(token, 'token');
-    console.log(decoded);
+    res.status(200).send(true);
   } catch (error) {
-    console.error(error);
+    res.status(401).send(false);
   }
 });
 

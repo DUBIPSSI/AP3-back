@@ -11,8 +11,7 @@ function verifMdp(mdp) {
   return regex.test(mdp);
 }
 function verifbirthDate(date) {
-  console.log(date);
   var regex = /^\d{4}-\d{2}-\d{2}$/;
-  return regex.test(date)
+  return regex.test(date);
 }
 module.exports = { verifName, verifMail, verifMdp, verifbirthDate };

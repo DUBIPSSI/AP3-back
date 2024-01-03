@@ -19,9 +19,10 @@ router.get('/user', (req, res) => {
 });
 
 router.get('/utilisateur', async (req, res) => {
-  const { email } = req.query;
+  const { token } = req.query;
   try {
-    const utilisateurs = await getUtilisateurs(email);
+    const decoded = jwt.verify(token, 'token');
+    const utilisateurs = await getUtilisateurs(decoded.email);
     res.json(utilisateurs);
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });

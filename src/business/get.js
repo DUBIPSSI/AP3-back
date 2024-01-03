@@ -1,9 +1,9 @@
 const db = require('../bdd/user');
 
-async function getUtilisateurs() {
-  const query = `SELECT * FROM utilisateur`;
+async function getUtilisateurs(email) {
+  const query = `SELECT * FROM utilisateur WHERE email = ? `;
   return new Promise((resolve, reject) => {
-    db.query(query, (error, results) => {
+    db.query(query, [email], (error, results) => {
       if (error) {
         console.error('Erreur lors de la récupération des utilisateurs : ' + error);
         reject(error);

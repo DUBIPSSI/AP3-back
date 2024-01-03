@@ -12,15 +12,16 @@ router.get('/user', (req, res) => {
   console.log(req.query);
   try {
     const decoded = jwt.verify(token, 'token');
-    res.status(200).send(true);
+    res.status(200).json({ email: decoded.email, result: true });
   } catch (error) {
     res.status(401).send(false);
   }
 });
 
 router.get('/utilisateur', async (req, res) => {
+  const { email } = req.query;
   try {
-    const utilisateurs = await getUtilisateurs();
+    const utilisateurs = await getUtilisateurs(email);
     res.json(utilisateurs);
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });

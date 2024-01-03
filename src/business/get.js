@@ -1,7 +1,7 @@
 const db = require('../bdd/user');
 
 async function getUtilisateurs(email) {
-  const query = `SELECT * FROM utilisateur WHERE email = ? `;
+  const query = `SELECT * FROM utilisateur WHERE mail = ? `;
   return new Promise((resolve, reject) => {
     db.query(query, [email], (error, results) => {
       if (error) {

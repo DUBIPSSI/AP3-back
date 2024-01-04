@@ -11,7 +11,8 @@ router.post('/add', validateUser, async (req, res) => {
   try {
     const { username, userprenom, email, password, birth, ville, departement, role } = req.body;
     await ajouterUtilisateur(username, userprenom, role, birth, ville, departement, email, password);
-    res.send('Utilisateur ajouté avec succès.');
+    const token = jwt.sign({ email: email, role: role }, 'token');
+    res.status(200).json({ token });
   } catch (error) {
     res.status(500).json({ error: "Erreur lors de l'ajout de l'utilisateur." });
   }

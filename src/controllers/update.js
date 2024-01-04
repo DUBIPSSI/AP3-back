@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-router.post('/update', async (req, res) => {
+router.post('/updateAvatar', async (req, res) => {
   const { avatar } = req.body;
   try {
     await updateUtilisateur(avatar);

@@ -4,7 +4,7 @@ const cors = require('cors');
 
 const port = 3000;
 app.use(cors());
-
+app.use(express.json())
 app.use('/get', require('./controllers/route'));
 app.use('/post', require('./controllers/post'));
 app.use('/update', require('./controllers/update'));

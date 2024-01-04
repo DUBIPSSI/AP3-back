@@ -12,7 +12,7 @@ router.get('/user', (req, res) => {
   console.log(req.query);
   try {
     const decoded = jwt.verify(token, 'token');
-    res.status(200).json({ email: decoded.email, result: true });
+    res.status(200).send(true);
   } catch (error) {
     res.status(200).send(false);
   }

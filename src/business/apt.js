@@ -18,3 +18,5 @@ async function updateUtilisateur(avatar, email) {
     console.log('fdp');
   }
 }
+
+module.exports = { updateUtilisateur };

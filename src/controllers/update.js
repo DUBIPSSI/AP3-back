@@ -1,6 +1,8 @@
 const express = require('express');
 const router = express.Router();
 
+const { updateUtilisateur } = require('../business/apt');
+
 router.post('/updateAvatar', async (req, res) => {
   const { avatar, email } = req.body;
   try {
@@ -11,4 +13,4 @@ router.post('/updateAvatar', async (req, res) => {
   }
 });
 
-export default router;
+module.exports = router;

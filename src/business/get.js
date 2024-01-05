@@ -71,6 +71,7 @@ async function getEventByParticipation(id) {
           reject(error);
         } else {
           console.log('Dubi tu casse les couilles');
+          console.log(results);
           resolve(results);
         }
       });

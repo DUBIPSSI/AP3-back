@@ -59,6 +59,25 @@ async function getUserId(email) {
   });
 }
 
-async function getEventByParticipation() {}
+async function getEventByParticipation(id) {
+  const query = `SELECT e.*  FROM utilisateur u JOIN participation p ON u.id_user = p.id_user JOIN evenement e ON p.id_event = e.id
+  WHERE p.id = ?
+  `;
+  try {
+    const res = await new Promise((resolve, reject) => {
+      db.query(query, [id], (error, results) => {
+        if (error) {
+          console.error("Erreur lors de la récupération de l'utilisateur : " + error);
+          reject(error);
+        } else {
+          console.log('Dubi tu casse les couilles');
+          resolve(results);
+        }
+      });
+    });
+  } catch (error) {
+    console.log('enculé');
+  }
+}
 
-module.exports = { getUtilisateurs, getClub, getEvenement, getUserId };
+module.exports = { getUtilisateurs, getClub, getEvenement, getUserId, getEventByParticipation };

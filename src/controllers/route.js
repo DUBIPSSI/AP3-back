@@ -3,7 +3,7 @@ const router = express.Router();
 const codesPostaux = require('codes-postaux');
 const jwt = require('jsonwebtoken');
 
-const { getUtilisateurs, getClub, getEvenement } = require('../business/get');
+const { getUtilisateurs, getClub, getEvenement, getEventByParticipation } = require('../business/get');
 
 router.use(express.json());
 
@@ -29,14 +29,14 @@ router.get('/utilisateur', async (req, res) => {
   }
 });
 
-router.get('/club', async (req, res) => {
-  try {
-    const utilisateurs = await getClub();
-    res.json(utilisateurs);
-  } catch (error) {
-    res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });
-  }
-});
+// router.get('/club', async (req, res) => {
+//   try {
+//     const utilisateurs = await getClub();
+//     res.json(utilisateurs);
+//   } catch (error) {
+//     res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });
+//   }
+// });
 
 router.get('/evenement', async (req, res) => {
   try {
@@ -47,9 +47,20 @@ router.get('/evenement', async (req, res) => {
   }
 });
 
-router.get('/logout', (req, res) => {
-  req.session.destroy();
-  res.send('Utilisateur déconnecté avec succès.');
+router.get('/getJoinedEvents', async (req, res) => {
+  const { token } = req.query;
+  try {
+    const decoded = jwt.verify(token, 'token');
+    const events = await getEventByParticipation(decoded.id);
+    res.json(events);
+  } catch (error) {
+    res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });
+  }
 });
+
+// router.get('/logout', (req, res) => {
+//   req.session.destroy();
+//   res.send('Utilisateur déconnecté avec succès.');
+// });
 
 module.exports = router;

@@ -44,7 +44,7 @@ async function getEvenement() {
   });
 }
 
-async function getUserId() {
+async function getUserId(email) {
   const query = `SELECT id FROM utilisateur WHERE mail = ? `;
   return new Promise((resolve, reject) => {
     db.query(query, [email], (error, results) => {

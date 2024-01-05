@@ -64,7 +64,7 @@ async function getEventByParticipation(id) {
   WHERE u.id = ?
   `;
   try {
-    const res = await new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       db.query(query, [id], (error, results) => {
         if (error) {
           console.error("Erreur lors de la récupération de l'utilisateur : " + error);

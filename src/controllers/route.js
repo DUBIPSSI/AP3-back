@@ -52,6 +52,7 @@ router.get('/getJoinedEvents', async (req, res) => {
   try {
     const decoded = jwt.verify(token, 'token');
     const events = await getEventByParticipation(decoded.id);
+    console.log(events);
     res.json(events);
   } catch (error) {
     res.status(500).json({ error: 'Erreur lors de la récupération des utilisateurs.' });

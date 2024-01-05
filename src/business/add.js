@@ -44,7 +44,7 @@ async function login(email, password) {
                 reject(err);
               } else if (passwordMatch) {
                 console.log('Mot de passe valide !');
-                resolve({ email: user.mail, role: user.role });
+                resolve({ email: user.mail, role: user.role, id: user.id });
               } else {
                 console.log('Mot de passe invalide.');
                 resolve(null);
@@ -127,4 +127,5 @@ async function deleteParticipation(idUtilisateur, idEvenement) {
     console.log('enfoire');
   }
 }
+
 module.exports = { ajouterUtilisateur, login, ajouterEvent, ajouterParticipation, deleteParticipation };

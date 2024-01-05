@@ -63,7 +63,7 @@ async function login(email, password) {
   }
 }
 
-async function ajouterEvent(nom, description, lieu, prix, capacite, date ) {
+async function ajouterEvent(nom, description, lieu, prix, capacite, date) {
   const query = `
     INSERT INTO evenement (nom, description, lieu, prix, capacite, date)
     VALUES (?, ?, ?, ?, ?, ?)
@@ -85,4 +85,46 @@ async function ajouterEvent(nom, description, lieu, prix, capacite, date ) {
   }
 }
 
-module.exports = { ajouterUtilisateur, login, ajouterEvent };
+async function ajouterParticipation(idUtilisateur, idEvenement) {
+  const query = `
+    INSERT INTO participation (id_user, id_event)
+    VALUES (?, ?)
+  `;
+  try {
+    const res = await new Promise((resolve, reject) => {
+      db.query(query, [idUtilisateur, idEvenement], (error, results) => {
+        if (error) {
+          console.error("Erreur lors de l'ajout de l'utilisateur : " + error);
+          reject(error);
+        } else {
+          console.log('Participation ajoutée avec succès !');
+          resolve(results);
+        }
+      });
+    });
+  } catch (error) {
+    console.log('enfoire');
+  }
+}
+
+async function deleteParticipation(idUtilisateur, idEvenement) {
+  const query = `
+    DELETE FROM participation WHERE id_user = ? AND id_event = ?
+  `;
+  try {
+    const res = await new Promise((resolve, reject) => {
+      db.query(query, [idUtilisateur, idEvenement], (error, results) => {
+        if (error) {
+          console.error("Erreur lors de l'ajout de l'utilisateur : " + error);
+          reject(error);
+        } else {
+          console.log('Participation supprimée avec succès !');
+          resolve(results);
+        }
+      });
+    });
+  } catch (error) {
+    console.log('enfoire');
+  }
+}
+module.exports = { ajouterUtilisateur, login, ajouterEvent, ajouterParticipation, deleteParticipation };

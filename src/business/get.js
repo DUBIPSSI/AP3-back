@@ -28,6 +28,7 @@ async function getClub() {
     });
   });
 }
+
 async function getEvenement() {
   const query = `SELECT * FROM evenement ORDER BY id DESC `;
   return new Promise((resolve, reject) => {
@@ -43,4 +44,21 @@ async function getEvenement() {
   });
 }
 
-module.exports = { getUtilisateurs, getClub, getEvenement };
+async function getUserId() {
+  const query = `SELECT id FROM utilisateur WHERE mail = ? `;
+  return new Promise((resolve, reject) => {
+    db.query(query, [email], (error, results) => {
+      if (error) {
+        console.error('Erreur lors de la récupération des utilisateurs : ' + error);
+        reject(error);
+      } else {
+        console.log('Utilisateurs récupérés avec succès !');
+        resolve(results);
+      }
+    });
+  });
+}
+
+async function getEventByParticipation() {}
+
+module.exports = { getUtilisateurs, getClub, getEvenement, getUserId };

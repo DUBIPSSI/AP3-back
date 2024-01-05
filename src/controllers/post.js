@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const jwt = require('jsonwebtoken');
 const validateUser = require('./middleware');
-
+const { getUserId } = require('../business/get');
 const { ajouterUtilisateur, login, ajouterEvent, ajouterParticipation, deleteParticipation } = require('../business/add');
 
 router.use(express.json());
@@ -10,9 +10,9 @@ router.use(express.json());
 router.post('/add', validateUser, async (req, res) => {
   try {
     const { username, userprenom, email, password, birth, ville, departement, role } = req.body;
-    const newUser = await ajouterUtilisateur(username, userprenom, role, birth, ville, departement, email, password);
-
-    const token = jwt.sign({ email: email, role: role, id: newUser.id }, 'token');
+    await ajouterUtilisateur(username, userprenom, role, birth, ville, departement, email, password);
+    const id = await getUserId(email);
+    const token = jwt.sign({ email: email, role: role, id: id }, 'token');
     res.status(200).json({ token });
   } catch (error) {
     res.status(200).json({ error: "Erreur lors de l'ajout de l'utilisateur." });

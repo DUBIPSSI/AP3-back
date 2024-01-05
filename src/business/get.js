@@ -60,7 +60,7 @@ async function getUserId(email) {
 }
 
 async function getEventByParticipation(id) {
-  const query = `SELECT e.*  FROM utilisateur u JOIN participation p ON u.id_user = p.id_user JOIN evenement e ON p.id_event = e.id
+  const query = `SELECT e.*  FROM utilisateur u JOIN participation p ON u.id = p.id_user JOIN evenement e ON p.id_event = e.id
   WHERE p.id = ?
   `;
   try {

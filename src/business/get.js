@@ -80,5 +80,19 @@ async function getEventByParticipation(id) {
     console.log('enculé');
   }
 }
+async function getEventBySport(sport) {
+  const query = `SELECT * FROM evenement WHERE categorie  = ? ORDER BY id DESC `;
+  return new Promise((resolve, reject) => {
+    db.query(query, [sport], (error, results) => {
+      if (error) {
+        console.error('Erreur lors de la récupération des utilisateurs : ' + error);
+        reject(error);
+      } else {
+        console.log('Evenement récupérés avec succès !');
+        resolve(results);
+      }
+    });
+  });
+}
 
-module.exports = { getUtilisateurs, getClub, getEvenement, getUserId, getEventByParticipation };
+module.exports = { getEventBySport, getUtilisateurs, getClub, getEvenement, getUserId, getEventByParticipation };

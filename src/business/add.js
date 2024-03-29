@@ -63,14 +63,14 @@ async function login(email, password) {
   }
 }
 
-async function ajouterEvent(nom, description, lieu, prix, capacite, date) {
+async function ajouterEvent(nom, description, lieu, prix, capacite, categorie, date) {
   const query = `
-    INSERT INTO evenement (nom, description, lieu, prix, capacite, date)
-    VALUES (?, ?, ?, ?, ?, ?)
+    INSERT INTO evenement (nom, description, lieu, prix, capacite, categorie, date)
+    VALUES (?, ?, ?, ?, ?, ?, ?)
   `;
   try {
     const res = await new Promise((resolve, reject) => {
-      db.query(query, [nom, description, lieu, prix, capacite, date], (error, results) => {
+      db.query(query, [nom, description, lieu, prix, capacite, categorie, date], (error, results) => {
         if (error) {
           console.error("Erreur lors de l'ajout de l'utilisateur : " + error);
           reject(error);
@@ -128,4 +128,26 @@ async function deleteParticipation(idUtilisateur, idEvenement) {
   }
 }
 
-module.exports = { ajouterUtilisateur, login, ajouterEvent, ajouterParticipation, deleteParticipation };
+async function ajouterCommentaire(description, idEvent) {
+  const query = `
+    INSERT INTO commentaire (description, id_events, id_user)
+    VALUES (?, ?, ?)
+  `;
+  try {
+    const res = await new Promise((resolve, reject) => {
+      db.query(query, [description, idEvent, idUser], (error, results) => {
+        if (error) {
+          console.error("Erreur lors de l'ajout du commentaire : " + error);
+          reject(error);
+        } else {
+          console.log('Commentaire ajouté avec succès !');
+          resolve(results);
+        }
+      });
+    });
+  } catch (error) {
+    throw error;
+  }
+}
+
+module.exports = { ajouterUtilisateur, login, ajouterEvent, ajouterParticipation, deleteParticipation, ajouterCommentaire };

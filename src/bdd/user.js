@@ -1,5 +1,5 @@
 const mysql = require('mysql');
-
+console.log(process.env.DBUSER);
 const connection = mysql.createConnection({
   host: process.env.DBHOST,
   user: process.env.DBUSER,

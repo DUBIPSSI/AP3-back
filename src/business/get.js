@@ -95,4 +95,6 @@ async function getEventBySport(sport) {
   });
 }
 
+
+
 module.exports = { getEventBySport, getUtilisateurs, getClub, getEvenement, getUserId, getEventByParticipation };

@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const validateUser = require('./middleware');
 const { getUserId } = require('../business/get');
-const { ajouterUtilisateur, login, ajouterEvent, ajouterParticipation, deleteParticipation } = require('../business/add');
+const { ajouterUtilisateur, login, ajouterEvent, ajouterParticipation, deleteParticipation, ajouterCommentaire } = require('../business/add');
 
 router.use(express.json());
 
@@ -21,9 +21,9 @@ router.post('/add', validateUser, async (req, res) => {
 
 router.post('/addEvent', async (req, res) => {
   try {
-    const { nom, description, lieu, prix, capacite, date } = req.body;
+    const { nom, description, lieu, prix, capacite, categorie, date } = req.body;
     console.log(req.body);
-    await ajouterEvent(nom, description, lieu, prix, capacite, date);
+    await ajouterEvent(nom, description, lieu, prix, capacite, categorie, date );
     res.send('Evenement ajouté avec succès.');
   } catch (error) {
     res.status(500).json({ error: "Erreur lors de l'ajout de l'utilisateur." });
@@ -36,7 +36,7 @@ router.post('/login', async (req, res) => {
     const user = await login(email, password);
 
     if (user) {
-      const token = jwt.sign({ email: user.email, role: user.role, id: user.id }, process.env.SECRET_KEY);
+      const token = jwt.sign({ email: user.email, role: user.role, id: user.id  }, process.env.SECRET_KEY);
       res.status(200).json({ token });
     } else {
       res.status(401).json({ error: 'Identifiants invalides.' });
@@ -70,5 +70,18 @@ router.post('/deleteParticipation', async (req, res) => {
     res.status(200).json({ error: 'Erreur lors de la suppression de la participation.' });
   }
 });
+
+router.post('/addComment', async (req, res) => {
+  const { description, id_event, id_user } = req.body;
+  try {
+    await ajouterCommentaire(description, id_event, id_user );
+    res.status(200).send('commentaire ajouté avec succès.');
+  } catch (error) {
+    res.status(500).json({ error: "Erreur lors de l'ajout du commentaire." });
+
+  }
+
+});
+
 
 module.exports = router;

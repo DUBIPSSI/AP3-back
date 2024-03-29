@@ -66,4 +66,6 @@ router.get('/filterBySport', async (req, res) => {
   }
 });
 
+
+
 module.exports = router;
